@@ -7,6 +7,8 @@
         </a>
 
         <!-- Menu Desktop -->
+        <div class="flex gap-3">
+            <flux:button icon="bell" class="cursor-pointer" wire:click='requests'>{{ $this->getRequests }}</flux:button>
             <flux:dropdown position="bottom" align="end">
                 <flux:button icon:trailing="bars-3"></flux:button>
 
@@ -16,8 +18,10 @@
                     <flux:menu.item wire:click='profile' icon="user">Mi perfil</flux:menu.item>
                     <flux:menu.separator />
 
-                    <flux:menu.item wire:click='logout' variant="danger" icon="arrow-right-start-on-rectangle">Cerrar sesión</flux:menu.item>
+                    <flux:menu.item wire:click='logout' variant="danger" icon="arrow-right-start-on-rectangle">Cerrar
+                        sesión</flux:menu.item>
                 </flux:menu>
             </flux:dropdown>
+        </div>
     </div>
 </div>

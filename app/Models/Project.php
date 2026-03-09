@@ -22,7 +22,7 @@ class Project extends Model
 
     public function manager() : BelongsTo
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class, 'manager');
     }
 
     public function team(): HasMany
@@ -30,9 +30,14 @@ class Project extends Model
         return $this->hasMany(Team::class, 'project_id');
     }
 
-     public function tasks(): HasMany
+    public function tasks(): HasMany
     {
         return $this->hasMany(Task::class, 'project_id');
+    }
+
+    public function requests(): HasMany
+    {
+        return $this->hasMany(Request::class);
     }
 
 }

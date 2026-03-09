@@ -4,7 +4,7 @@
         <h1 class="text-2xl text-slate-500 font-bold mb-5">
             <button wire:click='openModalMembers'
                 class="hover:underline transition-colors cursor-pointer">Colaboradores:</button>
-            <span class="text-pink-500 font-bold">{{ $totalMembers }}</span>
+            <span class="text-pink-500 font-bold">{{ $this->totalMembers }}</span>
         </h1>
         @if (collect($members)->isNotEmpty())
         <flux:avatar.group>

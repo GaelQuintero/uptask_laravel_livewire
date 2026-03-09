@@ -5,6 +5,7 @@ namespace App\Livewire\Auth\Tasks;
 use App\Models\Project;
 use App\Models\Team;
 use Flux\Flux;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -38,11 +39,11 @@ class TaskActions extends Component
     #[On('refreshMembers')]
     public function getTotalMembers()
     {
-         $this->totalMembers = Team::query()->where('project_id', $this->project->id)->count();
-         return;
+        $this->totalMembers = Team::query()->where('project_id', $this->project->id)->count();
+        return;
     }
 
-    #[On('refreshMembers')]
+    #[Computed()]
     public function getMembers()
     {
         return Team::query()->select('id', 'project_id', 'user_id')->where('project_id', $this->project->id)->limit(3)->latest()->get();
@@ -51,7 +52,7 @@ class TaskActions extends Component
     public function render()
     {
         return view('livewire.auth.tasks.task-actions', [
-            'members' => $this->getMembers()
+            'members' => $this->getMembers
         ]);
     }
 }

@@ -5,7 +5,7 @@
         @endif
     </div>
 
-    <div class="flex lg:grid lg:grid-cols-5 gap-5 mt-10 overflow-x-auto lg:overflow-visible">
+    <div class="flex flex-col lg:grid lg:grid-cols-5 gap-5 mt-10 overflow-x-auto lg:overflow-visible">
         {{-- Pendientes --}}
         <div class="block">
             <p class="bg-white mb-2 p-2 shadow rounded min-w-50 border-t-5 border-slate-400 font-semibold">Pendientes

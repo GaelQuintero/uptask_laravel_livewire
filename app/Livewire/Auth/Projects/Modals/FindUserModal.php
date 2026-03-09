@@ -3,6 +3,7 @@
 namespace App\Livewire\Auth\Projects\Modals;
 
 use App\Models\Project;
+use App\Models\Request;
 use App\Models\Team;
 use App\Models\User;
 use Flux\Flux;
@@ -68,18 +69,26 @@ class FindUserModal extends Component
         //Verificar si el usuario es el manager
         $this->authorize('create', [Team::class, $this->project]);
 
-        //Verificar si el usuario ya esta en el proyecto y si no, se crea
+        //Verificar si ya se envio una solicitud previamente
+        $requestExists = Request::query()
+                        ->where('destination_id', $this->result->id)
+                        ->where('project_id', $this->project->id)
+                        ->where('manager_id', $this->project->manager)
+                        ->exists();
+
+        if($requestExists) return $this->message = 'El usuario ya cuenta con una solicitud para este proyecto';
+
+        //Verificar si el usuario ya esta en el proyecto y si no, se envia la invitación
         try {
-            $this->project->team()->create([
-                'user_id' => $this->result->id,
-                'role_id' => 1
+            $this->project->requests()->create([
+                'destination_id' => $this->result->id,
+                'project_id' => $this->project->id,
+                'manager_id' => $this->project->manager,
             ]);
+            
         } catch (\Throwable $th) {
             return $this->message = 'El usuario ya está en el proyecto';
         }
-
-        //Vaciar informacion
-        $this->reset(['result']);
 
         //Cerrar el modal
         Flux::modal('find-user')->close();
@@ -89,13 +98,16 @@ class FindUserModal extends Component
 
         //Mostrar mensaje success
         $this->swalSuccess([
-            'title' => 'Miembro agregado correctamente',
+            'title' => "Se ha enviado la solicitud a {$this->result->name} correctamente",
             'toast' => true,
             'position' => 'top-end',
             'timer' => 3500,
             'showConfirmButton' => false,
             'timerProgressBar' => true,
         ]);
+
+        //Vaciar informacion
+        $this->reset(['result']);
     }
 
     public function render()

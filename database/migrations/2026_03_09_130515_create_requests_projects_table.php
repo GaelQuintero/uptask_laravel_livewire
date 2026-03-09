@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('invitations', function (Blueprint $table) {
+        Schema::create('requests_projects', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('destination_id')->constrained('users');
+            $table->foreignId('project_id')->constrained();
+            $table->foreignId('manager_id')->constrained('users');
+            $table->unique(['destination_id','project_id', 'manager_id']);
             $table->timestamps();
         });
     }
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('invitations');
+        Schema::dropIfExists('requests_projects');
     }
 };
