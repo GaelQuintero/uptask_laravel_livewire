@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth\Projects\Modals;
 
+use App\Events\Notifications\getNotificationEvent;
 use App\Models\Project;
 use App\Models\Request;
 use App\Models\Team;
@@ -85,7 +86,9 @@ class FindUserModal extends Component
                 'project_id' => $this->project->id,
                 'manager_id' => $this->project->manager,
             ]);
-            
+
+            getNotificationEvent::dispatch($this->result->id);
+
         } catch (\Throwable $th) {
             return $this->message = 'El usuario ya está en el proyecto';
         }

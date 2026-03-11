@@ -1,6 +1,6 @@
 <div class="flex flex-col">
     @forelse ($this->getRequets as $request)
-        <div class="flex justify-between items-center bg-gray-100 rounded shadow p-5">
+        <div class="flex justify-between items-center bg-white rounded shadow p-5">
             <div class="flex flex-col gap-3">
                 <p class="font-bold text-slate-600 text-2xl">Has sido invitado para colaborar al proyecto: <span
                         class="font-black">{{ $request->project->project_name }}</span></p>
